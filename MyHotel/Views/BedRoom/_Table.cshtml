@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MyHotel.ViewModel.BedRoom.BedRoomListViewModel>
+
+
+<table id="BedRoom" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LevelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeRoomName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a id="btnEditar" class="btn btn-primary" href="@Url.Action("Edit","BedRoom",new { id = item.BedRoomID })"><i class="fas fa-edit"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeRoomName)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,86 @@
+﻿@model MyHotel.ViewModel.BedRoom.BedRoomViewModel
+
+
+@{
+    string Titulo = "Crear Habitación";
+    string BG = "bg-primary";
+
+    if (Model.TypeRoomID > 0)
+    {
+        Titulo = "Editar Habitación";
+        BG = "bg-success";
+    }
+
+}
+
+<div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header @BG">
+                <h4 class="modal-title">@Titulo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            @using (Ajax.BeginForm("Create", "BedRoom",
+                    new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin = "OnBegin", OnComplete = "OnComplete" },
+                    htmlAttributes: new { @id = "frm" }))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.BedRoomID)
+
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ingrese el nombre de la habitación" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ingrese el Precio de la habitación" } })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", @placeholder = "Ingrese los detalles de la habitación" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LevelID)
+                                    @Html.DropDownListFor(model => model.LevelID, new SelectList(Model.Levels, "LevelID", "Name", Model.LevelID),htmlAttributes:
+                                    new { @class = "form-control select2bs4" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.TypeRoomID, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.TypeRoomID, new SelectList(Model.TypeRooms, "TypeRoomID", "Name", Model.TypeRoomID),
+                               htmlAttributes:new { @class = "form-control select2bs4" })
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
